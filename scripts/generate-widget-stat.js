@@ -25,7 +25,7 @@ async function saveManifestFile() {
   const widgetData = await getWidgetData();
   const manifestFile = resolve(
     __dirname,
-    `../dist/${compressedOrgId}/manifest.json`,
+    `../available-widgets/${compressedOrgId}/manifest.json`,
   );
 
   await mkdir(dirname(manifestFile), { recursive: true });

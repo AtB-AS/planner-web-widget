@@ -37,7 +37,11 @@ app.use("/widget", express.static(distDir, { maxAge: "7d" }));
 
 // Load manifest for the current org
 function getManifest() {
-  const manifestPath = path.join(distDir, compressedOrgId, "manifest.json");
+  const manifestPath = path.join(
+    "available-widgets",
+    compressedOrgId,
+    "manifest.json",
+  );
   if (!fs.existsSync(manifestPath)) {
     return { latest: null, all: [] };
   }
