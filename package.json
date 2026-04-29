@@ -1,0 +1,32 @@
+{
+  "name": "@atb-as/planner-web-widget",
+  "version": "3.2.3",
+  "private": true,
+  "license": "EUPL-1.2",
+  "scripts": {
+    "build": "yarn vite build --emptyOutDir",
+    "build:widget": "sh ./scripts/build-widget.sh",
+    "build:all-widgets": "sh ./scripts/build-all-widgets.sh",
+    "start": "node server.js",
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "@github/combobox-nav": "^3.0.1",
+    "express": "^4.21.0",
+    "lz-string": "^1.5.0"
+  },
+  "devDependencies": {
+    "@atb-as/theme": "^15.0.1",
+    "@atb-as/token": "^0.0.3",
+    "@types/node": "^25.6.0",
+    "compare-versions": "^6.1.1",
+    "patch-package": "^8.0.0",
+    "postcss": "^8.5.6",
+    "postcss-cli": "^11.0.1",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-preset-env": "^10.2.4",
+    "typescript": "5.9.2",
+    "vite": "^7.1.2",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
