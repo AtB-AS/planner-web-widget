@@ -33,7 +33,18 @@ app.use("/api", async (req, res) => {
 });
 
 // Serve widget build artifacts as static files
-app.use("/widget", express.static(distDir, { maxAge: "7d" }));
+app.use(
+  "/widget",
+  express.static(distDir, {
+    setHeaders: (res) =>
+      res.setHeader(
+        "Cache-Control",
+        process.env.NODE_ENV === "production"
+          ? "public, max-age=604800, stale-while-revalidate=86400"
+          : "no-cache",
+      ),
+  }),
+);
 
 // Load manifest for the current org
 function getManifest() {
