@@ -23,6 +23,11 @@ const PLANNER_URL_BASE =
 
 const distDir = path.resolve(import.meta.dirname, "dist");
 
+app.use((req, _res, next) => {
+  console.log(`${req.method} ${req.originalUrl}`);
+  next();
+});
+
 // Proxy API requests to the planner backend to avoid CORS issues
 app.use("/api", async (req: Request, res: Response) => {
   const target = new URL(req.originalUrl, PLANNER_URL_BASE);
