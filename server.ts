@@ -1,7 +1,21 @@
-const express = require("express");
-const path = require("path");
-const fs = require("fs");
-const { compressToEncodedURIComponent } = require("lz-string");
+import type { Request, Response } from "express";
+
+const express = require("express") as typeof import("express");
+const path = require("path") as typeof import("path");
+const fs = require("fs") as typeof import("fs");
+const { compressToEncodedURIComponent } =
+  require("lz-string") as typeof import("lz-string");
+
+interface WidgetVersion {
+  version: string;
+  created: string;
+  urls: { css: string; umd: string; esm: string };
+}
+
+interface Manifest {
+  latest: WidgetVersion | null;
+  all: WidgetVersion[];
+}
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -13,7 +27,7 @@ const PLANNER_URL_BASE =
 const distDir = path.resolve(__dirname, "dist");
 
 // Proxy API requests to the planner backend to avoid CORS issues
-app.use("/api", async (req, res) => {
+app.use("/api", async (req: Request, res: Response) => {
   const target = new URL(req.originalUrl, PLANNER_URL_BASE);
   try {
     const response = await fetch(target.toString(), {
@@ -27,7 +41,7 @@ app.use("/api", async (req, res) => {
     const body = await response.arrayBuffer();
     res.send(Buffer.from(body));
   } catch (err) {
-    console.error("API proxy error:", err.message);
+    console.error("API proxy error:", err instanceof Error ? err.message : err);
     res.status(502).json({ error: "Failed to proxy request" });
   }
 });
@@ -36,7 +50,7 @@ app.use("/api", async (req, res) => {
 app.use(
   "/widget",
   express.static(distDir, {
-    setHeaders: (res) =>
+    setHeaders: (res: import("http").ServerResponse) =>
       res.setHeader(
         "Cache-Control",
         process.env.NODE_ENV === "production"
@@ -47,7 +61,7 @@ app.use(
 );
 
 // Load manifest for the current org
-function getManifest() {
+function getManifest(): Manifest {
   const manifestPath = path.join(
     "available-widgets",
     compressedOrgId,
@@ -60,7 +74,7 @@ function getManifest() {
 }
 
 // Documentation page
-app.get("/widget", (req, res) => {
+app.get("/widget", (req: Request, res: Response) => {
   const manifest = getManifest();
   if (!manifest.latest) {
     return res
@@ -210,7 +224,7 @@ app.get("/widget", (req, res) => {
 });
 
 // Fullscreen widget preview (with optional version)
-app.get("/widget/preview/:version?", (req, res) => {
+app.get("/widget/preview/:version?", (req: Request, res: Response) => {
   const manifest = getManifest();
   if (!manifest.latest) {
     return res
@@ -268,7 +282,7 @@ app.get("/widget/preview/:version?", (req, res) => {
 </html>`);
 });
 
-function escapeHtml(str) {
+function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

@@ -7,7 +7,7 @@
     "build": "yarn vite build --emptyOutDir",
     "build:widget": "sh ./scripts/build-widget.sh",
     "build:all-widgets": "sh ./scripts/build-all-widgets.sh",
-    "start": "node server.js",
+    "start": "node --experimental-strip-types server.ts",
     "postinstall": "patch-package"
   },
   "dependencies": {
@@ -18,6 +18,7 @@
   "devDependencies": {
     "@atb-as/theme": "^15.0.1",
     "@atb-as/token": "^0.0.3",
+    "@types/express": "^5.0.6",
     "@types/node": "^25.6.0",
     "compare-versions": "^6.1.1",
     "patch-package": "^8.0.0",

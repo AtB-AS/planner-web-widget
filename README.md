@@ -16,7 +16,7 @@ src/
   widget.ts              Main library (vanilla TS, no framework)
   widget.module.css      Styles (CSS Modules, composed from styles/)
   styles/                Shared CSS dependencies (search, selector, assistant)
-server.js                Express server for docs and static file serving
+server.ts                Express server for docs and static file serving
 scripts/                 Build pipeline
 dist/                    Build output (per-org versioned bundles)
 ```
@@ -38,7 +38,7 @@ The organization ID is compressed with `lz-string` for use in URLs.
 
 ### Server
 
-`server.js` is a lightweight Express server that:
+`server.ts` is a lightweight Express server that:
 
 - **`GET /widget`** — Documentation page with a live demo, installation
   instructions, and version history
@@ -144,7 +144,7 @@ Create an HTML file and load the widget:
 | `src/widget.module.css`   | Widget styles (composes from `src/styles/`)                 |
 | `src/styles/*.module.css` | Shared CSS for search inputs, time selectors, layout        |
 | `vite.config.js`          | Vite build config (lib mode, org-specific theming)          |
-| `server.js`               | Express server for docs and preview pages                   |
+| `server.ts`               | Express server for docs and preview pages                   |
 | `postcss.config.js`       | PostCSS config (token processing, autoprefixer)             |
 
 ### Versioning
