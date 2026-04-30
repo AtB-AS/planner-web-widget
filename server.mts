@@ -1,10 +1,7 @@
-import type { Request, Response } from "express";
-
-const express = require("express") as typeof import("express");
-const path = require("path") as typeof import("path");
-const fs = require("fs") as typeof import("fs");
-const { compressToEncodedURIComponent } =
-  require("lz-string") as typeof import("lz-string");
+import express, { type Request, type Response } from "express";
+import path from "path";
+import fs from "fs";
+import lzString from "lz-string";
 
 interface WidgetVersion {
   version: string;
@@ -20,11 +17,11 @@ interface Manifest {
 const app = express();
 const PORT = process.env.PORT || 3001;
 const orgId = process.env.ORG_ID || "atb";
-const compressedOrgId = compressToEncodedURIComponent(orgId);
+const compressedOrgId = lzString.compressToEncodedURIComponent(orgId);
 const PLANNER_URL_BASE =
   process.env.PLANNER_URL_BASE || "https://reise.atb.no/";
 
-const distDir = path.resolve(__dirname, "dist");
+const distDir = path.resolve(import.meta.dirname, "dist");
 
 // Proxy API requests to the planner backend to avoid CORS issues
 app.use("/api", async (req: Request, res: Response) => {
