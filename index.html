@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Widget Dev Preview</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: system-ui, sans-serif;
+      }
+      .wrapper {
+        width: 100%;
+      }
+      .widget {
+        display: flex;
+        flex: 1;
+        width: 100%;
+        max-width: 1024px;
+        margin: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div id="planner-widget" class="widget"></div>
+    </div>
+    <script type="module">
+      import { createWidget } from "./src/widget.ts";
+      const widget = createWidget({
+        urlBase: "http://localhost:5173/",
+        plannerUrlBase: "https://reise.atb.no/",
+        language: "nb",
+        outputOverrideOptions: { layoutMode: "doubleColumn" },
+      });
+      document.querySelector("#planner-widget").innerHTML = widget.output;
+      widget.init();
+    </script>
+  </body>
+</html>

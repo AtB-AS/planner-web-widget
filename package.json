@@ -4,6 +4,7 @@
   "private": true,
   "license": "EUPL-1.2",
   "scripts": {
+    "dev": "vite",
     "build": "yarn vite build --emptyOutDir",
     "build:widget": "sh ./scripts/build-widget.sh",
     "build:all-widgets": "sh ./scripts/build-all-widgets.sh",
