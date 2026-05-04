@@ -127,14 +127,18 @@ Create an HTML file and load the widget:
 ### Making changes
 
 1. Edit the source files in `src/`. The main entry point is `src/widget.ts`.
-2. Build for a single org to iterate quickly:
+2. Start the dev server with hot-reload:
    ```bash
-   ORG_ID=atb yarn build:widget
+   ORG_ID=atb yarn dev
    ```
-3. Start the server and verify in the browser:
+   Then open http://localhost:5173/ to see the widget preview. Changes to
+   TypeScript and CSS files will hot-reload instantly.
+3. When ready, build for a single org to verify the production output:
    ```bash
-   ORG_ID=atb yarn start
+   ORG_ID=atb yarn build:all-widgets
    ```
+4. Run `yarn start` to preview the built widget, including the documentation
+   page and fullscreen preview.
 
 ### Key files
 
@@ -174,6 +178,7 @@ Follow semantic versioning:
 ### CSS notes
 
 The widget uses CSS Modules with `composes` to share styles from `src/styles/`.
-PostCSS runs twice during the build as a workaround for `composes` not being
-fully resolved before other PostCSS plugins process the CSS. This is handled
-automatically by `scripts/build-widget.sh`.
+CSS imported via `composes` may contain unresolved `token()` calls because
+PostCSS processes the host file before its composed dependencies. The
+`resolveRemainingTokens` Vite plugin in `vite.config.js` handles this by running
+`@atb-as/token` a second time.
