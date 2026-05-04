@@ -1,4 +1,5 @@
 import { resolve } from "path";
+import postcss from "postcss";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import { compressToEncodedURIComponent } from "lz-string";
@@ -8,24 +9,28 @@ import { version } from "./package.json";
 // Workaround: CSS `composes` brings in styles from other files, but the
 // `token()` calls in those composed styles aren't processed by PostCSS
 // (same issue the build script works around by running PostCSS twice).
-// This plugin resolves any remaining `token()` calls after CSS modules
-// processing, using the same camelCase→kebab-case→CSS-var logic as
-// the @atb-as/token PostCSS plugin.
+// This plugin runs @atb-as/token again after CSS modules processing to
+// resolve any remaining `token()` calls.
 function resolveRemainingTokens() {
-  const camelToKebab = (str) =>
-    str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  const tokenPlugin = require("@atb-as/token");
+  const processor = postcss([tokenPlugin]);
   return {
     name: "resolve-remaining-tokens",
     enforce: "post",
-    transform(code, id) {
-      if (!id.includes(".css")) return;
-      if (!code.includes("token(")) return;
-      const result = code.replace(
-        /token\(\s*(['"])([\w.]+)\1\s*\)/g,
-        (_match, _q, path) =>
-          `var(--${camelToKebab(path).replace(/\./g, "-")})`,
-      );
-      return result !== code ? result : undefined;
+    async transform(code, id) {
+      if (!id.includes(".css") || !code.includes("token(")) return;
+      // In dev, Vite has already transformed CSS into a JS module.
+      // Extract the CSS string, process it, and replace it in the JS.
+      const cssMatch = code.match(/const __vite__css = (".*")\n/s);
+      if (cssMatch) {
+        const rawCss = JSON.parse(cssMatch[1]);
+        if (!rawCss.includes("token(")) return;
+        const result = await processor.process(rawCss, { from: id });
+        return code.replace(cssMatch[1], JSON.stringify(result.css));
+      }
+      // During build, code is still raw CSS
+      const result = await processor.process(code, { from: id });
+      return result.css;
     },
   };
 }
