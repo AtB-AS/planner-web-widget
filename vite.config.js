@@ -47,6 +47,23 @@ function resolveRemainingTokens() {
   };
 }
 
+// Vite doesn't track CSS imports for hot module reloading. This invalidates all
+// CSS modules to trigger a reload when a CSS module changes.
+function postCssHmr() {
+  return {
+    name: "postcss-hmr",
+    handleHotUpdate({ file, server }) {
+      if (file.endsWith(".module.css")) {
+        const affected = [...server.moduleGraph.idToModuleMap.values()].filter(
+          (mod) => mod.file?.endsWith(".module.css") && mod.file !== file,
+        );
+        affected.forEach((mod) => server.moduleGraph.invalidateModule(mod));
+        if (affected.length) return affected;
+      }
+    },
+  };
+}
+
 const orgId = process.env.ORG_ID;
 
 if (!orgId) {
@@ -73,6 +90,7 @@ export default defineConfig({
   },
   plugins: [
     resolveRemainingTokens(),
+    postCssHmr(),
     dts({
       include: [resolve(__dirname, "src/widget.ts")],
       rollupTypes: true,
