@@ -8,11 +8,11 @@
     "build": "yarn vite build --emptyOutDir",
     "build:widget": "sh ./scripts/build-widget.sh",
     "build:all-widgets": "sh ./scripts/build-all-widgets.sh",
-    "start": "node --experimental-strip-types server.mts",
+    "start": "node server.mts",
     "postinstall": "patch-package"
   },
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=24.0.0"
   },
   "dependencies": {
     "@github/combobox-nav": "^3.0.1",
