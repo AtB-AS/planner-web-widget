@@ -1,7 +1,7 @@
 # Planner Web Widget
 
 An embeddable JS widget that allows the user to start trip and departure
-searches on PTO websites. It redirects to planner-web with the selected
+searches on PTA websites. It redirects to planner-web with the selected
 locations and time as query parameters.
 
 The widget is built once per organization (atb, nfk, fram, troms, vkt, farte)
