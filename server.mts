@@ -1,12 +1,10 @@
 import express, { type Request, type Response } from "express";
 import path from "path";
 import fs from "fs";
-import lzString from "lz-string";
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const orgId = process.env.ORG_ID || "atb";
-const compressedOrgId = lzString.compressToEncodedURIComponent(orgId);
+const ORG_ID = process.env.ORG_ID || "atb";
 const PLANNER_URL_BASE =
   process.env.PLANNER_URL_BASE || "https://reise.atb.no/";
 const packageJson = JSON.parse(
@@ -61,7 +59,7 @@ app.use(
 app.get("/widget/preview/:version?", (req: Request, res: Response) => {
   const urlBase = `${req.protocol}://${req.get("host")}`;
   const version = req.params.version || packageJson.version;
-  const widgetPath = `/widget/${compressedOrgId}/${version}`;
+  const widgetPath = `/widget/${ORG_ID}/${version}`;
   const cssUrl = `${urlBase}${widgetPath}/planner-web.css`;
   const umdUrl = `${urlBase}${widgetPath}/planner-web.umd.js`;
 
@@ -110,8 +108,7 @@ app.get("/widget/preview/:version?", (req: Request, res: Response) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Widget server running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT} for ${ORG_ID}`);
   console.log(`  Latest version: ${packageJson.version}`);
-  console.log(`  Org: ${orgId} (${compressedOrgId})`);
-  console.log(`  Preview: http://localhost:${PORT}/widget/preview`);
+  console.log(`  Widget preview: http://localhost:${PORT}/widget/preview`);
 });

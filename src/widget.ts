@@ -46,7 +46,6 @@ type SettingConstants = {
 const html = String.raw;
 
 const MODULE_VERSION = process.env.MODULE_VERSION;
-const COMPRESSED_ORG = process.env.COMPRESSED_ORG;
 const ORG_ID = process.env.ORG_ID;
 const useDefaultButtonStyle = ORG_ID !== "fram";
 
@@ -68,9 +67,9 @@ function createSettingsConstants(urlBase: string, plannerUrlBase: string) {
   return {
     URL_BASE: urlBase,
     PLANNER_URL_BASE: plannerUrlBase,
-    URL_JS_UMD: `${urlBase}widget/${COMPRESSED_ORG}/${MODULE_VERSION}/planner-web.umd.js`,
-    URL_JS_ESM: `${urlBase}widget/${COMPRESSED_ORG}/${MODULE_VERSION}/planner-web.mjs`,
-    URL_CSS: `${urlBase}widget/${COMPRESSED_ORG}/${MODULE_VERSION}/planner-web.css`,
+    URL_JS_UMD: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.umd.js`,
+    URL_JS_ESM: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.mjs`,
+    URL_CSS: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.css`,
   };
 }
 
