@@ -3,27 +3,167 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Widget Dev Preview</title>
+    <title>Planner Web Widget</title>
     <style>
       body {
-        margin: 3rem;
         font-family: system-ui, sans-serif;
-        background: #eeeeee;
+        margin: 0;
+        padding: 0;
+        color: #333;
       }
-      .wrapper {
-        display: flex;
-        justify-content: center;
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem;
       }
+      h1 {
+        margin-bottom: 0.5rem;
+      }
+      h2 {
+        margin-top: 2rem;
+      }
+      h3 {
+        margin-top: 1.5rem;
+      }
+      pre {
+        background: #282a36;
+        color: #f8f8f2;
+        padding: 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        position: relative;
+      }
+      code {
+        font-family: "Fira Code", monospace;
+        font-size: 0.9rem;
+      }
+      .demo {
+        margin: 1rem 0;
+      }
+      details {
+        margin: 0.5rem 0;
+      }
+      summary {
+        cursor: pointer;
+        padding: 0.5rem 0;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: #f8f8f2;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      ul {
+        list-style-position: inside;
+      }
+    </style>
+    <style>
       .widget {
+        border: 1px solid #ddd;
         max-width: 1024px;
         width: 100%;
       }
     </style>
   </head>
   <body>
-    <div class="wrapper">
+    <main>
+      <h1 class="replace-content">Widget Documentation</h1>
+
+      <h2>Demo</h2>
       <div id="planner-widget" class="widget"></div>
-    </div>
+
+      <p>
+        <em
+          >Note: Widget is without padding. Should be up to consumer to decide
+          when integrating.</em
+        >
+      </p>
+
+      <h2 class="replace-content">Installation (latest version v${VERSION})</h2>
+
+      <p>
+        Install by copying HTML provided below. After loading JS and CSS file it
+        can be initialized using the following code:
+      </p>
+
+      <pre><code class="replace-content">&lt;script&gt;
+  const widget = window.PlannerWeb.createWidget({
+    urlBase: '${urlBase}',
+    plannerUrlBase: '${PLANNER_URL_BASE}',
+    language: 'nn',
+    outputOverrideOptions: {
+      inheritFont: false,
+      layoutMode: 'doubleColumn',
+    },
+  });
+  widget.init();
+&lt;/script&gt;</code></pre>
+
+      <h3>HTML output</h3>
+      <p>
+        The HTML output is available via <code>widget.output</code> after
+        calling <code>createWidget()</code>.
+      </p>
+
+      <h3>Scripts (UMD / ESM)</h3>
+      <pre><code class="replace-content">&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;</code></pre>
+      <pre><code class="replace-content">&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.mjs"&gt;&lt;/script&gt;</code></pre>
+
+      <h3>Styling</h3>
+      <pre><code class="replace-content">&lt;link rel="stylesheet" href="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;</code></pre>
+
+      <h3>Using dynamic output</h3>
+      <p>
+        You can inject HTML automatically by using
+        <code>widget.output</code> property. This can be done server side or by
+        using client side frameworks.
+      </p>
+      <p>
+        One advantage of doing this dynamically is that code is automatically
+        updated on new releases.
+        <strong
+          >Note: This is optional and not required if you use the HTML
+          directly.</strong
+        >
+      </p>
+      <pre><code>&lt;div id="planner-web"&gt;&lt;/div&gt;
+&lt;script&gt;
+  document.querySelector('#planner-web').innerHTML = widget.output;
+  widget.urls; // URLs to JS and CSS files
+&lt;/script&gt;</code></pre>
+
+      <h2>Complete example</h2>
+      <pre><code class="replace-content">&lt;link rel="stylesheet" href="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;
+
+&lt;style&gt;
+  .wrapper { background: #007ab5; display: flex; justify-content: center; }
+  .example { max-width: 1024px; width: 100%; }
+&lt;/style&gt;
+
+&lt;div class="wrapper"&gt;
+  &lt;div id="planner-widget" class="example"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const widget = window.PlannerWeb.createWidget({
+    urlBase: '${urlBase}',
+    outputOverrideOptions: { layoutMode: 'doubleColumn' },
+  });
+  document.querySelector('#planner-widget').innerHTML = widget.output;
+  widget.init();
+&lt;/script&gt;</code></pre>
+    </main>
+
     <script type="module">
       import { createWidget } from "./src/widget.ts";
       const widget = createWidget({
@@ -34,6 +174,18 @@
       });
       document.querySelector("#planner-widget").innerHTML = widget.output;
       widget.init();
+    </script>
+
+    <script type="module">
+      import packageJson from "./package.json";
+      document.querySelectorAll(".replace-content").forEach((el) => {
+        el.textContent = el.textContent
+          .replaceAll("${urlBase}", window.location.href)
+          .replaceAll("${PLANNER_URL_BASE}", "https://reise.atb.no/")
+          .replaceAll("${ORG_NAME}", /*TOOD*/ "AtB")
+          .replaceAll("${ORG_ID}", "IYFwRkA")
+          .replaceAll("${VERSION}", packageJson.version);
+      });
     </script>
   </body>
 </html>
