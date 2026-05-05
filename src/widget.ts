@@ -749,8 +749,8 @@ function createOutput(
                 />
               </button>
             </pw-swapbutton>
-            <pw-messagebox></pw-messagebox>
           </div>
+          <pw-messagebox></pw-messagebox>
         </fieldset>
         ${outputOverrideOptions.layoutMode !== "compact"
           ? searchTime("pw-assistant")
