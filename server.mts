@@ -70,7 +70,7 @@ app.get("/widget/preview/:version?", (req: Request, res: Response) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Widget Preview - v${version}</title>
+  <title>Planner Web Widget v${version}</title>
   <link rel="stylesheet" href="${cssUrl}">
   <style>
     body { margin: 0; font-family: system-ui, sans-serif; }
@@ -111,6 +111,7 @@ app.get("/widget/preview/:version?", (req: Request, res: Response) => {
 
 app.listen(PORT, () => {
   console.log(`Widget server running at http://localhost:${PORT}`);
+  console.log(`  Latest version: ${packageJson.version}`);
   console.log(`  Org: ${orgId} (${compressedOrgId})`);
   console.log(`  Preview: http://localhost:${PORT}/widget/preview`);
 });
