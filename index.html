@@ -119,6 +119,7 @@
       </div>
       <script>
         function setParam(key, value) {
+          event.preventDefault();
           const params = new URLSearchParams(window.location.search);
           params.set(key, value);
           window.location.search = params.toString();
