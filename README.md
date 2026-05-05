@@ -1,76 +1,27 @@
 # Planner Web Widget
 
-A standalone, embeddable travel planner widget built with vanilla TypeScript and
-CSS Modules. It allows external websites to embed trip search and departure
-lookup functionality.
+An embeddable JS widget that allows the user to start trip and departure
+searches on PTO websites. It redirects to planner-web with the selected
+locations and time as query parameters.
 
 The widget is built once per organization (atb, nfk, fram, troms, vkt, farte)
 and themed using `@atb-as/theme`.
 
-## How it works
+## Setup
 
-### Architecture
-
-```
-src/
-  widget.ts              Main library (vanilla TS, no framework)
-  widget.module.css      Styles (CSS Modules, composed from styles/)
-  styles/                Shared CSS dependencies (search, selector, assistant)
-server.mts                Express server for docs and static file serving
-scripts/                 Build pipeline
-dist/                    Build output (per-org versioned bundles)
-```
-
-The widget is a UMD/ESM library bundled with Vite. External sites load the JS
-and CSS files, then call `window.PlannerWeb.createWidget()` to render the
-widget.
-
-### Build output
-
-Each build produces three files per organization, output to
-`dist/<compressed-org-id>/<version>/`:
-
-- `planner-web.umd.js` — UMD bundle (for `<script>` tags)
-- `planner-web.mjs` — ESM bundle
-- `planner-web.css` — Styles
-
-The organization ID is compressed with `lz-string` for use in URLs.
-
-### Server
-
-`server.mts` is a lightweight Express server that:
-
-- **`GET /widget`** — Documentation page with a live demo, installation
-  instructions, and version history
-- **`GET /widget/preview/:version?`** — Fullscreen widget preview (defaults to
-  latest version)
-- **`/widget/<compressed-org>/<version>/*`** — Static serving of built widget
-  artifacts
-
-### Runtime dependencies
-
-The widget calls the planner-web BFF at runtime for geocoding:
-
-- `<urlBase>/api/departures/autocomplete` — Location search
-- `<urlBase>/api/departures/reverse` — Reverse geocoding (for "My location")
-
-The `urlBase` is configured by the consumer when calling `createWidget()`.
-
-## How to test it
-
-### Prerequisites
+### Development
 
 ```bash
 yarn install
 ```
 
-### Build and run locally
-
-Build the widget for a single org:
-
 ```bash
-ORG_ID=atb yarn build:widget
+yarn dev
 ```
+
+Then open http://localhost:5173/
+
+### Building and previewing a new version
 
 Build for all orgs:
 
@@ -89,32 +40,52 @@ Then open:
 - http://localhost:3001/widget — Documentation page with live demo
 - http://localhost:3001/widget/preview — Fullscreen widget preview
 
-### Manual testing
 
-1. Build the widget for the org you want to test
-2. Start the server
-3. Open the documentation page and verify:
-   - The live demo renders and is interactive
-   - Location autocomplete works (requires the planner-web BFF to be running)
-   - Tab switching between "Find trip" and "See departures" works
-   - Time selection (now / depart / arrive) works
-   - The "My location" geolocation button works (requires HTTPS or localhost)
-4. Check the fullscreen preview at `/widget/preview`
+## How it works
 
-### Testing in an external page
+The widget is a vanilla JS library with no framework dependencies. Host websites
+integrate it in these steps:
 
-Create an HTML file and load the widget:
+1. Load the CSS and JS files (UMD or ESM), through `<link>` and `<script>` tags.
+2. Calling `createWidget()` with configuration. This returns an HTML string
+   containing the full widget markup and an initialization function.
+3. Inserting HTML content into the page. Can happen client or server-side.
+4. After the markup is in the DOM, calling `init()` attaches event listeners to
+   make the widget interactive.
+
+At runtime the widget calls the planner-web backend for location autocomplete
+and reverse geocoding. When the user submits a search, the browser navigates to
+planner-web with the selected locations and time as query parameters.
+
+### Build output
+
+Each build produces four files per organization, output to
+`dist/<compressed-org-id>/<version>/`:
+
+- `planner-web.umd.js` — UMD bundle (for `<script>` tags)
+- `planner-web.mjs` — ESM bundle
+- `planner-web.d.ts` — TypeScript types for the ESM bundle
+- `planner-web.css` — Styles
+
+The organization ID is compressed with `lz-string` for use in URLs.
+
+### Integrating the widget
+
+Include the following in your HTML,
 
 ```html
-<link
-  rel="stylesheet"
-  href="http://localhost:3001/widget/<org-id>/<version>/planner-web.css"
-/>
+<link rel="stylesheet"href="https://reise.example.no/widget/<org-id>/<version>/planner-web.css" />
+```
+
+```html
 <div id="planner-widget"></div>
-<script src="http://localhost:3001/widget/<org-id>/<version>/planner-web.umd.js"></script>
+```
+
+```html
+<script src="https://reise.example.no/widget/<org-id>/<version>/planner-web.umd.js"></script>
 <script>
   const widget = window.PlannerWeb.createWidget({
-    urlBase: 'https://reiseplanlegger.example.no/',
+    urlBase: 'https://reise.example.no/',
     language: 'nb',
   });
   document.querySelector('#planner-widget').innerHTML = widget.output;
@@ -122,50 +93,20 @@ Create an HTML file and load the widget:
 </script>
 ```
 
-## How to make and release changes
+### Server
 
-### Making changes
+`server.mts` is a lightweight Express server that:
 
-1. Edit the source files in `src/`. The main entry point is `src/widget.ts`.
-2. Start the dev server with hot-reload:
-   ```bash
-   ORG_ID=atb yarn dev
-   ```
-   Then open http://localhost:5173/ to see the widget preview. Changes to
-   TypeScript and CSS files will hot-reload instantly.
-3. When ready, build for a single org to verify the production output:
-   ```bash
-   ORG_ID=atb yarn build:all-widgets
-   ```
-4. Run `yarn start` to preview the built widget, including the documentation
-   page and fullscreen preview.
+- **`GET /widget`** — Documentation page with a live demo, installation
+  instructions, and version history
+- **`GET /widget/preview/:version?`** — Fullscreen widget preview (defaults to
+  latest version)
+- **`/widget/<compressed-org>/<version>/*`** — Static serving of built widget
+  artifacts
 
-### Key files
+Run `ORG_ID=atb yarn start` to start the server locally.
 
-| File                      | Purpose                                                     |
-| ------------------------- | ----------------------------------------------------------- |
-| `src/widget.ts`           | Widget logic, HTML generation, Web Components, translations |
-| `src/widget.module.css`   | Widget styles (composes from `src/styles/`)                 |
-| `src/styles/*.module.css` | Shared CSS for search inputs, time selectors, layout        |
-| `vite.config.js`          | Vite build config (lib mode, org-specific theming)          |
-| `server.mts`              | Express server for docs and preview pages                   |
-| `postcss.config.js`       | PostCSS config (token processing, autoprefixer)             |
-
-### Versioning
-
-Update the `version` field in `package.json`. The version is baked into the
-build artifacts and used for the output path (`dist/<org>/<version>/`).
-
-Follow semantic versioning:
-
-- **Major** (`*.y.z`): Breaking changes that require consumers to update their
-  HTML
-- **Minor** (`x.*.z`): New features, backwards compatible — no consumer HTML
-  changes needed
-- **Patch** (`x.y.*`): Bug fixes, no changes needed other than loading the new
-  bundle
-
-### Releasing
+## Release
 
 1. Update `version` in `package.json`
 2. Build all org variants:
@@ -173,12 +114,11 @@ Follow semantic versioning:
    yarn build:all-widgets
    ```
 3. Verify the output in `dist/` — each org should have the new version directory
-4. Deploy the server (or the `dist/` directory to a CDN/static host)
 
-### CSS notes
+> [!NOTE]
+> To preview the built widget before deploying, run `ORG_ID=atb yarn start`.
+> Then open:
+> - http://localhost:3001/widget — Documentation page with live demo
+> - http://localhost:3001/widget/preview — Fullscreen widget preview
 
-The widget uses CSS Modules with `composes` to share styles from `src/styles/`.
-CSS imported via `composes` may contain unresolved `token()` calls because
-PostCSS processes the host file before its composed dependencies. The
-`resolveRemainingTokens` Vite plugin in `vite.config.js` handles this by running
-`@atb-as/token` a second time.
+4. Deploy the server or the `dist/` directory to a CDN/static host
