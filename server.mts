@@ -3,23 +3,15 @@ import path from "path";
 import fs from "fs";
 import lzString from "lz-string";
 
-interface WidgetVersion {
-  version: string;
-  created: string;
-  urls: { css: string; umd: string; esm: string };
-}
-
-interface Manifest {
-  latest: WidgetVersion | null;
-  all: WidgetVersion[];
-}
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 const orgId = process.env.ORG_ID || "atb";
 const compressedOrgId = lzString.compressToEncodedURIComponent(orgId);
 const PLANNER_URL_BASE =
   process.env.PLANNER_URL_BASE || "https://reise.atb.no/";
+const packageJson = JSON.parse(
+  fs.readFileSync(path.resolve(import.meta.dirname, "package.json"), "utf-8"),
+);
 
 const distDir = path.resolve(import.meta.dirname, "dist");
 
@@ -65,30 +57,10 @@ app.use(
   }),
 );
 
-// Load manifest for the current org
-function getManifest(): Manifest {
-  const manifestPath = path.join(
-    "available-widgets",
-    compressedOrgId,
-    "manifest.json",
-  );
-  if (!fs.existsSync(manifestPath)) {
-    return { latest: null, all: [] };
-  }
-  return JSON.parse(fs.readFileSync(manifestPath, "utf-8"));
-}
-
 // Fullscreen widget preview (with optional version)
 app.get("/widget/preview/:version?", (req: Request, res: Response) => {
-  const manifest = getManifest();
-  if (!manifest.latest) {
-    return res
-      .status(404)
-      .send("No widget builds found. Run build:widget first.");
-  }
-
   const urlBase = `${req.protocol}://${req.get("host")}`;
-  const version = req.params.version || manifest.latest.version;
+  const version = req.params.version || packageJson.version;
   const widgetPath = `/widget/${compressedOrgId}/${version}`;
   const cssUrl = `${urlBase}${widgetPath}/planner-web.css`;
   const umdUrl = `${urlBase}${widgetPath}/planner-web.umd.js`;

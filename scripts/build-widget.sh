@@ -10,7 +10,6 @@ if [ -n "$ORG_ID" ]; then
     ORG_ID="$ORG_ID"
     echo "Found ORG_ID= $ORG_ID in environment. Building widget for $ORG_ID"
     ORG_ID=$ORG_ID yarn build
-    ORG_ID=$ORG_ID node ./scripts/generate-widget-stat.js
 else
   echo "No ORG_ID found in environment. Please expose it, or build all widgets instead"
   exit 1
