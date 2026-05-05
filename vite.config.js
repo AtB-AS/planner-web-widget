@@ -38,7 +38,10 @@ export default defineConfig({
     resolveRemainingTokens(),
     postCssHmr(),
     dts({
-      include: [resolve(__dirname, "src/widget.ts")],
+      include: [
+        resolve(__dirname, "src/widget.ts"),
+        resolve(__dirname, "src/types.d.ts"),
+      ],
       rollupTypes: true,
     }),
   ],
