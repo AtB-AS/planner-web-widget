@@ -25,6 +25,13 @@
       h3 {
         margin-top: 1.5rem;
       }
+      a {
+        color: #007ab5;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
       pre {
         background: #282a36;
         color: #f8f8f2;
@@ -87,6 +94,36 @@
           when integrating.</em
         >
       </p>
+
+      <h3>Settings</h3>
+
+      <div>
+        <span>
+          <a href="#" onclick="setParam('layout', 'doubleColumn')"
+            >Double Column</a
+          >
+          |
+          <a href="#" onclick="setParam('layout', 'singleColumn')"
+            >Single Column</a
+          >
+          |
+          <a href="#" onclick="setParam('layout', 'compact')">Compact</a>
+        </span>
+      </div>
+      <div>
+        <span>
+          <a href="#" onclick="setParam('language', 'nb')">Bokmål</a> |
+          <a href="#" onclick="setParam('language', 'nn')">Nynorsk</a> |
+          <a href="#" onclick="setParam('language', 'en')">English</a>
+        </span>
+      </div>
+      <script>
+        function setParam(key, value) {
+          const params = new URLSearchParams(window.location.search);
+          params.set(key, value);
+          window.location.search = params.toString();
+        }
+      </script>
 
       <h2 class="replace-content">Installation (latest version v${VERSION})</h2>
 
@@ -166,11 +203,16 @@
 
     <script type="module">
       import { createWidget } from "./src/widget.ts";
+
+      const params = new URLSearchParams(window.location.search);
+      const layoutMode = params.get("layout") || "doubleColumn";
+      const language = params.get("language") || "nb";
+
       const widget = createWidget({
-        urlBase: window.location.href,
+        urlBase: window.location.origin + "/",
         plannerUrlBase: "https://reise.atb.no/",
-        language: "nb",
-        outputOverrideOptions: { layoutMode: "doubleColumn" },
+        language,
+        outputOverrideOptions: { layoutMode },
       });
       document.querySelector("#planner-widget").innerHTML = widget.output;
       widget.init();
@@ -180,7 +222,7 @@
       import packageJson from "./package.json";
       document.querySelectorAll(".replace-content").forEach((el) => {
         el.textContent = el.textContent
-          .replaceAll("${urlBase}", window.location.href)
+          .replaceAll("${urlBase}", window.location.origin + "/")
           .replaceAll("${PLANNER_URL_BASE}", "https://reise.atb.no/")
           .replaceAll("${ORG_ID}", "IYFwRkA")
           .replaceAll("${VERSION}", packageJson.version);
