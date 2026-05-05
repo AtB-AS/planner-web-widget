@@ -85,6 +85,7 @@ app.get("/widget/preview/:version?", (req: Request, res: Response) => {
       max-width: 1024px;
       padding: 2rem;
       margin: 0 auto;
+      box-sizing: border-box;
     }
   </style>
 </head>
