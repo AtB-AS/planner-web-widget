@@ -59,7 +59,7 @@ app.use(
 app.get("/widget/preview/:version?", (req: Request, res: Response) => {
   const urlBase = `${req.protocol}://${req.get("host")}`;
   const version = req.params.version || packageJson.version;
-  const widgetPath = `/widget/${ORG_ID}/${version}`;
+  const widgetPath = `/widget/${version}/${ORG_ID}`;
   const cssUrl = `${urlBase}${widgetPath}/planner-web.css`;
   const umdUrl = `${urlBase}${widgetPath}/planner-web.umd.js`;
 

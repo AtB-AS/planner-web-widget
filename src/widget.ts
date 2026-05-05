@@ -67,9 +67,9 @@ function createSettingsConstants(urlBase: string, plannerUrlBase: string) {
   return {
     URL_BASE: urlBase,
     PLANNER_URL_BASE: plannerUrlBase,
-    URL_JS_UMD: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.umd.js`,
-    URL_JS_ESM: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.mjs`,
-    URL_CSS: `${urlBase}widget/${ORG_ID}/${MODULE_VERSION}/planner-web.css`,
+    URL_JS_UMD: `${urlBase}widget/${MODULE_VERSION}/${ORG_ID}/planner-web.umd.js`,
+    URL_JS_ESM: `${urlBase}widget/${MODULE_VERSION}/${ORG_ID}/planner-web.mjs`,
+    URL_CSS: `${urlBase}widget/${MODULE_VERSION}/${ORG_ID}/planner-web.css`,
   };
 }
 

@@ -154,11 +154,11 @@
       </p>
 
       <h3>Scripts (UMD / ESM)</h3>
-      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;</code></pre>
-      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.mjs"&gt;&lt;/script&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${VERSION}/${ORG_ID}/planner-web.umd.js"&gt;&lt;/script&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${VERSION}/${ORG_ID}/planner-web.mjs"&gt;&lt;/script&gt;</code></pre>
 
       <h3>Styling</h3>
-      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${VERSION}/${ORG_ID}/planner-web.css"/&gt;</code></pre>
 
       <h3>Using dynamic output</h3>
       <p>
@@ -181,7 +181,7 @@
 &lt;/script&gt;</code></pre>
 
       <h2>Complete example</h2>
-      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;
+      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${VERSION}/${ORG_ID}/planner-web.css"/&gt;
 
 &lt;style&gt;
   .wrapper { background: #007ab5; display: flex; justify-content: center; }
@@ -192,7 +192,7 @@
   &lt;div id="planner-widget" class="example"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;
+&lt;script src="${URL_BASE}widget/${VERSION}/${ORG_ID}/planner-web.umd.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   const widget = window.PlannerWeb.createWidget({
     URL_BASE: '${URL_BASE}',

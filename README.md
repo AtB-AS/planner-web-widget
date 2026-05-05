@@ -59,7 +59,7 @@ planner-web with the selected locations and time as query parameters.
 ### Build output
 
 Each build produces four files per organization, output to
-`dist/<compressed-org-id>/<version>/`:
+`dist/<version>/<org-id>/`:
 
 - `planner-web.umd.js`: UMD bundle (for `<script>` tags)
 - `planner-web.mjs`: ESM bundle
@@ -71,7 +71,7 @@ Each build produces four files per organization, output to
 Include the following in your HTML,
 
 ```html
-<link rel="stylesheet"href="https://reise.example.no/widget/<org-id>/<version>/planner-web.css" />
+<link rel="stylesheet"href="https://reise.example.no/widget/<version>/<org-id>/planner-web.css" />
 ```
 
 ```html
@@ -79,7 +79,7 @@ Include the following in your HTML,
 ```
 
 ```html
-<script src="https://reise.example.no/widget/<org-id>/<version>/planner-web.umd.js"></script>
+<script src="https://reise.example.no/widget/<version>/<org-id>/planner-web.umd.js"></script>
 <script>
   const widget = window.PlannerWeb.createWidget({
     urlBase: 'https://reise.example.no/',
@@ -96,7 +96,7 @@ Include the following in your HTML,
 
 - **`/widget/preview/:version?`**: Fullscreen widget preview (defaults to
   latest version)
-- **`/widget/<compressed-org>/<version>/*`**: Static serving of built widget
+- **`/widget/<version>/<org-id>/*`**: Static serving of built widget
   artifacts
 
 Run `ORG_ID=atb yarn start` to start the server locally.

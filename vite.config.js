@@ -55,7 +55,7 @@ export default defineConfig({
       name: "PlannerWeb",
       fileName: `planner-web`,
     },
-    outDir: resolve(__dirname, `dist/${ORG_ID}/${version}`),
+    outDir: resolve(__dirname, `dist/${version}/${ORG_ID}`),
     rollupOptions: {
       output: {
         manualChunks: undefined,
