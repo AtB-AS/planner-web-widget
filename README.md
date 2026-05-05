@@ -35,9 +35,7 @@ Start the documentation/preview server:
 ORG_ID=atb yarn start
 ```
 
-Then open:
-
-- http://localhost:3001/widget/preview — Widget preview
+Then open http://localhost:3001/widget/preview
 
 
 ## How it works
