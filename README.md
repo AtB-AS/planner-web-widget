@@ -66,8 +66,6 @@ Each build produces four files per organization, output to
 - `planner-web.d.ts`: TypeScript types for the ESM bundle
 - `planner-web.css`: Styles
 
-The organization ID is compressed with `lz-string` for use in URLs.
-
 ### Integrating the widget
 
 Include the following in your HTML,
