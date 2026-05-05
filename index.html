@@ -83,7 +83,7 @@
   </head>
   <body>
     <main>
-      <h1 class="replace-content">Widget Documentation</h1>
+      <h1>Widget Documentation</h1>
 
       <h2>Demo</h2>
       <div id="planner-widget" class="widget"></div>
@@ -125,16 +125,18 @@
         }
       </script>
 
-      <h2 class="replace-content">Installation (latest version v${VERSION})</h2>
+      <h2 class="replace-variables">
+        Installation (latest version v${VERSION})
+      </h2>
 
       <p>
         Install by copying HTML provided below. After loading JS and CSS file it
         can be initialized using the following code:
       </p>
 
-      <pre><code class="replace-content">&lt;script&gt;
+      <pre><code class="replace-variables">&lt;script&gt;
   const widget = window.PlannerWeb.createWidget({
-    urlBase: '${urlBase}',
+    urlBase: '${URL_BASE}',
     plannerUrlBase: '${PLANNER_URL_BASE}',
     language: 'nn',
     outputOverrideOptions: {
@@ -152,11 +154,11 @@
       </p>
 
       <h3>Scripts (UMD / ESM)</h3>
-      <pre><code class="replace-content">&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;</code></pre>
-      <pre><code class="replace-content">&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.mjs"&gt;&lt;/script&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.mjs"&gt;&lt;/script&gt;</code></pre>
 
       <h3>Styling</h3>
-      <pre><code class="replace-content">&lt;link rel="stylesheet" href="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;</code></pre>
+      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;</code></pre>
 
       <h3>Using dynamic output</h3>
       <p>
@@ -179,7 +181,7 @@
 &lt;/script&gt;</code></pre>
 
       <h2>Complete example</h2>
-      <pre><code class="replace-content">&lt;link rel="stylesheet" href="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;
+      <pre><code class="replace-variables">&lt;link rel="stylesheet" href="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.css"/&gt;
 
 &lt;style&gt;
   .wrapper { background: #007ab5; display: flex; justify-content: center; }
@@ -190,10 +192,10 @@
   &lt;div id="planner-widget" class="example"&gt;&lt;/div&gt;
 &lt;/div&gt;
 
-&lt;script src="${urlBase}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;
+&lt;script src="${URL_BASE}widget/${ORG_ID}/${VERSION}/planner-web.umd.js"&gt;&lt;/script&gt;
 &lt;script&gt;
   const widget = window.PlannerWeb.createWidget({
-    urlBase: '${urlBase}',
+    URL_BASE: '${URL_BASE}',
     outputOverrideOptions: { layoutMode: 'doubleColumn' },
   });
   document.querySelector('#planner-widget').innerHTML = widget.output;
@@ -220,9 +222,9 @@
 
     <script type="module">
       import packageJson from "./package.json";
-      document.querySelectorAll(".replace-content").forEach((el) => {
+      document.querySelectorAll(".replace-variables").forEach((el) => {
         el.textContent = el.textContent
-          .replaceAll("${urlBase}", window.location.origin + "/")
+          .replaceAll("${URL_BASE}", window.location.origin + "/")
           .replaceAll("${PLANNER_URL_BASE}", "https://reise.atb.no/")
           .replaceAll("${ORG_ID}", "IYFwRkA")
           .replaceAll("${VERSION}", packageJson.version);
