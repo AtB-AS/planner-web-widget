@@ -11,6 +11,9 @@
     "start": "node --experimental-strip-types server.mts",
     "postinstall": "patch-package"
   },
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "dependencies": {
     "@github/combobox-nav": "^3.0.1",
     "express": "^4.21.0",
