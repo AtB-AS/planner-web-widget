@@ -324,7 +324,7 @@ function createOutput(
     const icon = iconData(item.category);
 
     const img = el("img");
-    img.src = `${PLANNER_URL_BASE}assets/mono/light/${icon.icon}.svg`;
+    img.src = `${URL_BASE}assets/mono/light/${icon.icon}.svg`;
     img.alt = icon.alt;
     img.role = "img";
 
@@ -395,7 +395,7 @@ function createOutput(
 
       const createLocationItem = function () {
         const img = el("img");
-        img.src = `${PLANNER_URL_BASE}assets/mono/places/Location.svg`;
+        img.src = `${URL_BASE}assets/mono/places/Location.svg`;
         img.role = "img";
         const divImg = el("div", [img], style.itemIcon);
         img.ariaHidden = "true";
@@ -741,7 +741,7 @@ function createOutput(
                 type="button"
               >
                 <img
-                  src="${PLANNER_URL_BASE}/assets/mono/actions/Swap.svg"
+                  src="${URL_BASE}assets/mono/actions/Swap.svg"
                   width="20"
                   height="20"
                   role="none"

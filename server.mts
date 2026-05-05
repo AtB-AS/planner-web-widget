@@ -28,8 +28,11 @@ app.use((req, _res, next) => {
   next();
 });
 
-// Proxy API requests to the planner backend to avoid CORS issues
-app.use("/api", async (req: Request, res: Response) => {
+// Proxy API requests to the planner backend
+app.use("/api", plannerWebProxy);
+app.use("/assets", plannerWebProxy);
+
+async function plannerWebProxy(req: Request, res: Response) {
   const target = new URL(req.originalUrl, PLANNER_URL_BASE);
   try {
     const response = await fetch(target.toString(), {
@@ -46,7 +49,7 @@ app.use("/api", async (req: Request, res: Response) => {
     console.error("API proxy error:", err instanceof Error ? err.message : err);
     res.status(502).json({ error: "Failed to proxy request" });
   }
-});
+}
 
 // Serve widget build artifacts as static files
 app.use(

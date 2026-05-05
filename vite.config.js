@@ -20,6 +20,10 @@ export default defineConfig({
         target: process.env.PLANNER_URL_BASE || "https://reise.atb.no",
         changeOrigin: true,
       },
+      "/assets": {
+        target: process.env.PLANNER_URL_BASE || "https://reise.atb.no",
+        changeOrigin: true,
+      },
     },
   },
   resolve: {
