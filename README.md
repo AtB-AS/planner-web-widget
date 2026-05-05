@@ -9,17 +9,19 @@ and themed using `@atb-as/theme`.
 
 ## Setup
 
-### Development
-
 ```bash
 yarn install
 ```
 
+### Development
+
+To start a development server on http://localhost:5173/, run:
+
 ```bash
-yarn dev
+ORG_ID=atb yarn dev
 ```
 
-Then open http://localhost:5173/
+This previews [index.html](index.html), which loads and mounts [widget.ts](src/widget.ts). Changes to code are hot-reloaded in the browser.
 
 ### Building and previewing a new version
 
@@ -59,10 +61,10 @@ planner-web with the selected locations and time as query parameters.
 Each build produces four files per organization, output to
 `dist/<compressed-org-id>/<version>/`:
 
-- `planner-web.umd.js` — UMD bundle (for `<script>` tags)
-- `planner-web.mjs` — ESM bundle
-- `planner-web.d.ts` — TypeScript types for the ESM bundle
-- `planner-web.css` — Styles
+- `planner-web.umd.js`: UMD bundle (for `<script>` tags)
+- `planner-web.mjs`: ESM bundle
+- `planner-web.d.ts`: TypeScript types for the ESM bundle
+- `planner-web.css`: Styles
 
 The organization ID is compressed with `lz-string` for use in URLs.
 
@@ -94,9 +96,9 @@ Include the following in your HTML,
 
 `server.mts` is a lightweight Express server that:
 
-- **`GET /widget/preview/:version?`** — Fullscreen widget preview (defaults to
+- **`/widget/preview/:version?`**: Fullscreen widget preview (defaults to
   latest version)
-- **`/widget/<compressed-org>/<version>/*`** — Static serving of built widget
+- **`/widget/<compressed-org>/<version>/*`**: Static serving of built widget
   artifacts
 
 Run `ORG_ID=atb yarn start` to start the server locally.
@@ -108,7 +110,7 @@ Run `ORG_ID=atb yarn start` to start the server locally.
    ```bash
    yarn build:all-widgets
    ```
-3. Verify the output in `dist/` — each org should have the new version directory
+3. Verify the output in `dist/`. Each org should have the new version directory.
 
 > [!NOTE]
 > To preview the built widget before deploying, run `ORG_ID=atb yarn start`.
