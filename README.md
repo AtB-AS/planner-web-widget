@@ -37,8 +37,7 @@ ORG_ID=atb yarn start
 
 Then open:
 
-- http://localhost:3001/widget — Documentation page with live demo
-- http://localhost:3001/widget/preview — Fullscreen widget preview
+- http://localhost:3001/widget/preview — Widget preview
 
 
 ## How it works
@@ -97,8 +96,6 @@ Include the following in your HTML,
 
 `server.mts` is a lightweight Express server that:
 
-- **`GET /widget`** — Documentation page with a live demo, installation
-  instructions, and version history
 - **`GET /widget/preview/:version?`** — Fullscreen widget preview (defaults to
   latest version)
 - **`/widget/<compressed-org>/<version>/*`** — Static serving of built widget
@@ -117,8 +114,6 @@ Run `ORG_ID=atb yarn start` to start the server locally.
 
 > [!NOTE]
 > To preview the built widget before deploying, run `ORG_ID=atb yarn start`.
-> Then open:
-> - http://localhost:3001/widget — Documentation page with live demo
-> - http://localhost:3001/widget/preview — Fullscreen widget preview
+> Then open http://localhost:3001/widget/preview
 
 4. Deploy the server or the `dist/` directory to a CDN/static host
