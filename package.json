@@ -9,6 +9,8 @@
     "build:widget": "sh ./scripts/build-widget.sh",
     "build:all-widgets": "sh ./scripts/build-all-widgets.sh",
     "start": "node server.mts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "postinstall": "patch-package"
   },
   "engines": {
@@ -29,6 +31,7 @@
     "postcss-cli": "^11.0.1",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-preset-env": "^10.2.4",
+    "prettier": "^3.8.3",
     "typescript": "5.9.2",
     "vite": "^7.1.2",
     "vite-plugin-dts": "^4.5.4"
