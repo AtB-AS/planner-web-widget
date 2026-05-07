@@ -77,12 +77,10 @@ type LayoutMode = "doubleColumn" | "singleColumn" | "compact";
 
 type OutputOverrideOptions = {
   inheritFont?: boolean;
-  // @deprecated Use `layoutMode` instead.
-  singleColumnLayout?: boolean;
   /**
    * Layout mode for the widget.
    * - `doubleColumn`: Default layout with two columns.
-   * - `singleColumn`: Single column layout. Replaces `singleColumnLayout` in previous versions.
+   * - `singleColumn`: Single column layout.
    * - `compact`: Compact layout with less options.
    */
   layoutMode?: LayoutMode;
@@ -816,9 +814,7 @@ function createOutput(
   const output = html`
     <div
       data-theme="light"
-      data-layout="${outputOverrideOptions.singleColumnLayout
-        ? "singleColumn"
-        : outputOverrideOptions.layoutMode}"
+      data-layout="${outputOverrideOptions.layoutMode}"
       class="${andIf({
         [style.wrapper]: true,
         [style.inheritFont]: outputOverrideOptions.inheritFont ?? false,
