@@ -39,7 +39,6 @@ ORG_ID=atb pnpm start
 
 Then open http://localhost:3001/widget/preview
 
-
 ## How it works
 
 The widget is a vanilla JS library with no framework dependencies. Host websites
@@ -71,7 +70,10 @@ Each build produces four files per organization, output to
 Include the following in your HTML,
 
 ```html
-<link rel="stylesheet"href="https://reise.example.no/widget/<version>/<org-id>/planner-web.css" />
+<link
+  rel="stylesheet"
+  href="https://reise.example.no/widget/<version>/<org-id>/planner-web.css"
+/>
 ```
 
 ```html
@@ -82,10 +84,10 @@ Include the following in your HTML,
 <script src="https://reise.example.no/widget/<version>/<org-id>/planner-web.umd.js"></script>
 <script>
   const widget = window.PlannerWeb.createWidget({
-    urlBase: 'https://reise.example.no/',
-    language: 'nb',
+    urlBase: "https://reise.example.no/",
+    language: "nb",
   });
-  document.querySelector('#planner-widget').innerHTML = widget.output;
+  document.querySelector("#planner-widget").innerHTML = widget.output;
   widget.init();
 </script>
 ```

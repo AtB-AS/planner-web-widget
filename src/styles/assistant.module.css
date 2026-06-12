@@ -4,13 +4,13 @@
   align-items: center;
 }
 .container {
-  background-color: token('color.background.neutral.1.background');
+  background-color: token("color.background.neutral.1.background");
   height: 100%;
   position: relative;
   display: grid;
   grid-template-areas:
-    'main'
-    'alternatives';
+    "main"
+    "alternatives";
   width: 100%;
   max-width: var(--maxPageWidth);
 }
@@ -19,14 +19,14 @@
   grid-area: main;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: token('spacing.xLarge');
+  grid-gap: token("spacing.xLarge");
   width: 100%;
   max-width: var(--maxPageWidth);
-  padding: token('spacing.xLarge');
+  padding: token("spacing.xLarge");
   margin: 0 auto;
-  margin-top: token('spacing.large');
-  background-color: token('color.background.neutral.0.background');
-  border-radius: token('border.radius.regular');
+  margin-top: token("spacing.large");
+  background-color: token("color.background.neutral.0.background");
+  border-radius: token("border.radius.regular");
 }
 
 .input {
@@ -45,35 +45,35 @@
 }
 
 .heading {
-  color: token('color.background.accent.0.foreground.primary');
-  margin-bottom: token('spacing.medium');
+  color: token("color.background.accent.0.foreground.primary");
+  margin-bottom: token("spacing.medium");
 }
 
 .alternativesWrapper {
   grid-area: alternatives;
   width: 100%;
-  background-color: token('color.background.neutral.0.background');
-  padding: token('spacing.xLarge');
+  background-color: token("color.background.neutral.0.background");
+  padding: token("spacing.xLarge");
   max-width: var(--maxPageWidth);
   margin: 0 auto;
-  border-radius: 0 0 token('border.radius.regular')
-    token('border.radius.regular');
+  border-radius: 0 0 token("border.radius.regular")
+    token("border.radius.regular");
 }
 
 .alternatives {
   display: flex;
   flex-direction: column;
-  gap: token('spacing.medium');
-  padding: token('spacing.large');
+  gap: token("spacing.medium");
+  padding: token("spacing.large");
   width: 100%;
   max-width: var(--maxPageWidth);
   margin: 0 auto;
   margin-bottom: 5.75rem;
   display: flex;
   flex-direction: column;
-  gap: token('spacing.large');
-  background-color: token('color.background.neutral.2.background');
-  border-radius: token('border.radius.regular');
+  gap: token("spacing.large");
+  background-color: token("color.background.neutral.2.background");
+  border-radius: token("border.radius.regular");
 }
 
 .buttons {
@@ -81,35 +81,35 @@
   align-self: end;
   display: flex;
   justify-content: flex-end;
-  gap: token('spacing.medium');
+  gap: token("spacing.medium");
   width: 100%;
   max-width: var(--maxPageWidth);
   margin: 0 auto;
-  padding: token('spacing.medium') token('spacing.large') token('spacing.large')
-    token('spacing.large');
+  padding: token("spacing.medium") token("spacing.large") token("spacing.large")
+    token("spacing.large");
   z-index: 10;
   position: absolute;
   left: 0;
   right: 0;
-  background-color: token('color.background.neutral.0.background');
-  border-radius: 0 0 token('border.radius.regular')
-    token('border.radius.regular');
+  background-color: token("color.background.neutral.0.background");
+  border-radius: 0 0 token("border.radius.regular")
+    token("border.radius.regular");
 }
 
 .searchInputButton {
   height: var(--height);
   border: none;
-  background-color: token('color.background.neutral.0.background');
-  border: token('border.width.slim') solid
-    token('color.foreground.dynamic.disabled');
-  padding: token('spacing.small');
+  background-color: token("color.background.neutral.0.background");
+  border: token("border.width.slim") solid
+    token("color.foreground.dynamic.disabled");
+  padding: token("spacing.small");
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   position: absolute;
   top: 50%;
-  right: token('spacing.medium');
+  right: token("spacing.medium");
   transform: translate(0, -50%);
   z-index: 100;
 }
@@ -121,16 +121,16 @@
 @media (max-width: 650px) {
   .container {
     grid-template-areas:
-      'main'
-      'buttons'
-      'alternatives';
+      "main"
+      "buttons"
+      "alternatives";
   }
 
   .main {
     display: flex;
     flex-direction: column;
-    padding-bottom: token('spacing.xLarge') !important;
-    border-radius: token('border.radius.regular') token('border.radius.regular')
+    padding-bottom: token("spacing.xLarge") !important;
+    border-radius: token("border.radius.regular") token("border.radius.regular")
       0 0;
   }
 
@@ -142,11 +142,11 @@
   }
 
   .alternativesWrapper {
-    padding: token('spacing.small');
+    padding: token("spacing.small");
   }
 
   .alternatives {
-    padding: token('spacing.medium');
+    padding: token("spacing.medium");
   }
 
   .removeAllBorderRadius {
@@ -154,7 +154,7 @@
   }
 
   .container {
-    padding: token('spacing.medium');
+    padding: token("spacing.medium");
   }
 
   .walkSpeedSegments {
@@ -166,22 +166,22 @@
   margin: 0 auto;
   width: 100%;
   max-width: var(--maxPageWidth);
-  padding: token('spacing.xLarge');
+  padding: token("spacing.xLarge");
   display: flex;
   flex-direction: column;
-  gap: token('spacing.medium');
+  gap: token("spacing.medium");
 }
 
 .tripResults {
   display: flex;
   flex-direction: column;
-  gap: token('spacing.large');
+  gap: token("spacing.large");
 }
 
 .nonTransitResult {
   display: flex;
   flex-wrap: wrap;
-  gap: token('spacing.medium');
+  gap: token("spacing.medium");
 }
 
 .spanColumns {
@@ -189,6 +189,6 @@
 }
 
 .removeBorderRadiusBottom {
-  border-radius: token('border.radius.regular') token('border.radius.regular') 0
+  border-radius: token("border.radius.regular") token("border.radius.regular") 0
     0;
 }
