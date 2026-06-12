@@ -3,5 +3,5 @@ dist
 build
 coverage
 .yalc
-yarn.lock
+pnpm-lock.yaml
 patches
