@@ -10,7 +10,7 @@ and themed using `@atb-as/theme`.
 ## Setup
 
 ```bash
-yarn install
+pnpm install
 ```
 
 ### Development
@@ -18,7 +18,7 @@ yarn install
 To start a development server on http://localhost:5173/, run:
 
 ```bash
-ORG_ID=atb yarn dev
+ORG_ID=atb pnpm dev
 ```
 
 This previews [index.html](index.html), which loads and mounts [widget.ts](src/widget.ts). Changes to code are hot-reloaded in the browser.
@@ -28,13 +28,13 @@ This previews [index.html](index.html), which loads and mounts [widget.ts](src/w
 Build for all orgs:
 
 ```bash
-yarn build:all-widgets
+pnpm build:all-widgets
 ```
 
 Start the documentation/preview server:
 
 ```bash
-ORG_ID=atb yarn start
+ORG_ID=atb pnpm start
 ```
 
 Then open http://localhost:3001/widget/preview
@@ -99,19 +99,19 @@ Include the following in your HTML,
 - **`/widget/<version>/<org-id>/*`**: Static serving of built widget
   artifacts
 
-Run `ORG_ID=atb yarn start` to start the server locally.
+Run `ORG_ID=atb pnpm start` to start the server locally.
 
 ## Release
 
 1. Update `version` in `package.json`
 2. Build all org variants:
    ```bash
-   yarn build:all-widgets
+   pnpm build:all-widgets
    ```
 3. Verify the output in `dist/`. Each org should have the new version directory.
 
 > [!NOTE]
-> To preview the built widget before deploying, run `ORG_ID=atb yarn start`.
+> To preview the built widget before deploying, run `ORG_ID=atb pnpm start`.
 > Then open http://localhost:3001/widget/preview
 
 4. Deploy the server or the `dist/` directory to a CDN/static host
